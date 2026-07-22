@@ -97,6 +97,10 @@ InitTestScene*.unity*
 # /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 
+# Server IP Config
+/[Aa]ssets/Resources/ServerConfig.txt
+/[Aa]ssets/Resources/ServerConfig.txt.meta
+
 # Visual Scripting auto-generated files
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
