@@ -1,7 +1,21 @@
 {
   "headers": [
     {
-      "source": "/(.*).br",
+      "source": "/(.*)\\.wasm\\.br",
+      "headers": [
+        { "key": "Content-Type", "value": "application/wasm" },
+        { "key": "Content-Encoding", "value": "br" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.js\\.br",
+      "headers": [
+        { "key": "Content-Type", "value": "application/javascript" },
+        { "key": "Content-Encoding", "value": "br" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.data\\.br",
       "headers": [
         { "key": "Content-Encoding", "value": "br" }
       ]
