@@ -28,6 +28,18 @@ mergeInto(LibraryManager.library, {
             SendMessage('NetworkManager','OnRoomCreated', roomId);
         });
         
+        window.socket.on('join_failed', function(reason){
+            if (reason === "not_found" && window.isDevOp) {
+                // 🚨 핵심: C#까지 안 가고 JS 선에서 컷! 바로 방 생성을 서버에 찔러넣습니다.
+                console.log("🔥 [JS-Dev] 없는 방 번호입니다. 테스트를 위해 방을 강제로 생성합니다.");
+                window.socket.emit('create_room'); 
+            } 
+            else {
+                // Dev 모드가 아니거나(일반 유저), 꽉 찬 방(full)인 경우에만 C#으로 넘겨서 UI 띄우게 함
+                SendMessage('NetworkManager', 'OnJoinFailed', reason);
+            }
+        });
+
         // 2. 상대방(HTML 또는 다른 유니티) 입장 시 -> 호스트 역할로 Offer 생성
         window.socket.on('peer_joined', async function() {
             console.log("[JS] 상대방 입장! P2P 명함(Offer) 생성 중...");
@@ -138,4 +150,5 @@ mergeInto(LibraryManager.library, {
         window.socket.emit('ice_candidate', iceData, roomId);
     }
   }
+
 });

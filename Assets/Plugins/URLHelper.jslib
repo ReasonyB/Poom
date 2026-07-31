@@ -13,5 +13,11 @@ mergeInto(LibraryManager.library, {
         } else {
             return null; // 방 번호가 없으면 null 반환
         }
+    },
+
+    GetDevOpFromURL: function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        window.isDevOp = urlParams.get('dev') === 'true'; // ?dev= 값 추출
+        return window.isDevOp ? 1 : 0; // 유니티에서 bool로 인식할 수 있도록 1 또는 0 반환
     }
 });

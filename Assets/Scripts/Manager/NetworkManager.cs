@@ -9,17 +9,18 @@ public class NetworkManager : MonoBehaviour
     private static extern void ConnectToSignaling(string ServerUrl);
 
     [DllImport("__Internal")]
-    private static extern void SendToWebRTC(string message); // 웹으로 패킷 전송 함수 활성화!
-
-    [DllImport("__Internal")]
-    private static extern string GetRoomIdFromURL(); // URL에서 RoomId를 가져오는 함수 활성화!
-
+    private static extern void SendToWebRTC(string message); // 웹으로 패킷 전송 함수 활성화
+    
     [DllImport("__Internal")] private static extern void CreateRoomRequest();
     [DllImport("__Internal")] private static extern void JoinRoomRequest(string roomId);
     [DllImport("__Internal")] private static extern void SendOfferToRoom(string sdp, string roomId);
     [DllImport("__Internal")] private static extern void SendAnswerToRoom(string sdp, string roomId);
     [DllImport("__Internal")] private static extern void SendIceCandidateToRoom(string iceData, string roomId);
 
+    [DllImport("__Internal")]
+    private static extern string GetRoomIdFromURL();
+    [DllImport("__Internal")]
+    private static extern bool GetDevOpFromURL();
 
     private bool isP2PConnected = false;
     private string currentRoomId = "";
@@ -70,6 +71,7 @@ public class NetworkManager : MonoBehaviour
         //Action 호출 할지 말지
 
         string roomIdFromURL = GetRoomIdFromURL();
+        bool isDev = GetDevOpFromURL();
 
         if(!string.IsNullOrEmpty(roomIdFromURL))
         {
@@ -83,7 +85,7 @@ public class NetworkManager : MonoBehaviour
             CreateRoomRequest();
         }
     }
-
+    
     public void OnPeerJoined() { Debug.Log("[C#] 🟡 상대방 입장, 명함 교환 중..."); }
 
     // JS에서 P2P 통신이 완벽하게 뚫렸을 때 호출해주는 함수
